@@ -1,23 +1,30 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextPlugin from "@next/eslint-plugin-next";
+import reactPlugin from "eslint-plugin-react";
+import hooksPlugin from "eslint-plugin-react-hooks";
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
+/** @type {import('eslint').Linter.FlatConfig[]} */
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
+    plugins: {
+      "@next/next": nextPlugin,
+      react: reactPlugin,
+      "react-hooks": hooksPlugin,
+      "jsx-a11y": jsxA11yPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
+      // Tambahkan aturan custom di sini jika perlu
+    },
+  },
   {
     ignores: [
-      "node_modules/**",
       ".next/**",
+      "node_modules/**",
       "out/**",
-      "build/**",
-      "next-env.d.ts",
+      // file lain yang ingin diabaikan
     ],
   },
 ];

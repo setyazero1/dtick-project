@@ -6,9 +6,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Wallet, LogOut, User, Shield, Briefcase } from 'lucide-react';
 import { useAuthStore } from '@/lib/store/authStore';
-import LoginModal from '@/components/auth/LoginModal';
 import { truncateAddress } from '@/lib/utils';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+const LoginModal = dynamic(() => import('@/components/auth/LoginModal'), {
+    ssr: false, 
+  });
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
