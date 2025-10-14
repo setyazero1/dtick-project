@@ -11,13 +11,13 @@ export const ORGANIZER_ROYALTY_BP = 500; // 5%
 export const MAX_MARKUP_BP = 1000; // 10%
 
 export const EVENT_CATEGORIES = [
-  'Konser',
-  'Olahraga',
-  'Teater',
+  'Concert',
+  'Sports',
+  'Theater',
   'Festival',
-  'Konferensi',
+  'Conference',
   'Workshop',
-  'Lainnya'
+  'Other'
 ] as const;
 
 export const PAYMENT_TOLERANCE = 100_000; // 0.1 ADA

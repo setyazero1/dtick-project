@@ -11,14 +11,14 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event }: EventCardProps) => {
-  const availablePercentage = (event.availableTickets / event.totalTickets) * 100;
-  const isLowStock = availablePercentage < 20;
+  const availablePercentage = (event.totalTickets > 0) ? (event.availableTickets / event.totalTickets) * 100 : 0;
+  const isLowStock = availablePercentage > 0 && availablePercentage < 20;
   const isSoldOut = event.availableTickets === 0;
 
   return (
-    <Link href={`/events/${event.id}`}>
-      <div className="group relative bg-slate-800/50 rounded-xl border border-gray-700 hover:border-purple-500/50 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1">
-        {/* Image */}
+    <Link href={`/events/${event.id}`} className="flex h-full">
+      <div className="group relative bg-slate-800/50 rounded-xl border border-gray-700 hover:border-purple-500/50 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1 flex flex-col w-full">
+        {/* Bagian Gambar */}
         <div className="relative h-48 overflow-hidden">
           <Image
             src={event.imageUrl || '/placeholder-event.jpg'}
@@ -26,13 +26,9 @@ const EventCard = ({ event }: EventCardProps) => {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
-          
-          {/* Category Badge */}
           <div className="absolute top-4 left-4 px-3 py-1 bg-purple-500/90 backdrop-blur-sm rounded-full text-xs font-medium text-white">
             {event.category}
           </div>
-
-          {/* Status Badge */}
           {isSoldOut && (
             <div className="absolute top-4 right-4 px-3 py-1 bg-red-500/90 backdrop-blur-sm rounded-full text-xs font-medium text-white">
               Sold Out
@@ -43,41 +39,37 @@ const EventCard = ({ event }: EventCardProps) => {
               Almost Full
             </div>
           )}
-
-          {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-60" />
         </div>
 
-        {/* Content */}
-        <div className="p-5 space-y-4">
-          <div>
+        {/* Bagian Konten */}
+        <div className="p-5 flex flex-col flex-grow">
+          <div className="flex-grow">
             <h3 className="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-purple-400 transition-colors">
               {event.name}
             </h3>
-            <p className="text-sm text-gray-400 line-clamp-2">
+            <p className="text-sm text-gray-400 line-clamp-2 mb-4">
               {event.description}
             </p>
-          </div>
-
-          {/* Event Info */}
-          <div className="space-y-2">
-            <div className="flex items-center text-sm text-gray-400">
-              <Calendar className="w-4 h-4 mr-2 text-purple-400" />
-              {formatDate(event.date)}
-            </div>
-            <div className="flex items-center text-sm text-gray-400">
-              <MapPin className="w-4 h-4 mr-2 text-purple-400" />
-              {event.location}
-            </div>
-            <div className="flex items-center text-sm text-gray-400">
-              <Users className="w-4 h-4 mr-2 text-purple-400" />
-              {event.availableTickets} / {event.totalTickets} tickets available
+            <div className="space-y-2">
+              <div className="flex items-center text-sm text-gray-400">
+                <Calendar className="w-4 h-4 mr-2 text-purple-400" />
+                {formatDate(event.date)}
+              </div>
+              <div className="flex items-center text-sm text-gray-400">
+                <MapPin className="w-4 h-4 mr-2 text-purple-400" />
+                {event.location}
+              </div>
+              <div className="flex items-center text-sm text-gray-400">
+                <Users className="w-4 h-4 mr-2 text-purple-400" />
+                {event.availableTickets} / {event.totalTickets} tickets available
+              </div>
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="space-y-1">
-            <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+          {/* Footer Kartu */}
+          <div className="mt-auto pt-4 border-t border-gray-700">
+            <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden mb-4">
               <div
                 className={`h-full transition-all duration-300 ${
                   isSoldOut
@@ -89,22 +81,17 @@ const EventCard = ({ event }: EventCardProps) => {
                 style={{ width: `${100 - availablePercentage}%` }}
               />
             </div>
-          </div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-700">
-            <div>
-              <p className="text-xs text-gray-500">Starting from</p>
-              <p className="text-xl font-bold text-white">
-                {formatPrice(event.ticketPrice * 1_000_000)}
-              </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-500">Starting from</p>
+                <p className="text-xl font-bold text-white">
+                  {formatPrice(event.ticketPrice * 1_000_000)}
+                </p>
+              </div>
+              <div className="flex justify-center items-center w-25 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-lg transition-all transform group-hover:scale-105">
+                <span>{isSoldOut ? 'Sold Out' : 'Buy Ticket'}</span>
+              </div>
             </div>
-            <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium rounded-lg transition-all transform group-hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isSoldOut}
-            >
-              <Ticket className="w-4 h-4 inline mr-2" />
-              {isSoldOut ? 'Sold Out' : 'Buy Ticket'}
-            </button>
           </div>
         </div>
       </div>

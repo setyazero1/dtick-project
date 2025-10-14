@@ -144,14 +144,15 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Events Distribution */}
+         {/* Events Distribution */}
           <div className="p-6 bg-slate-800/50 border border-gray-700 rounded-xl">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-white">Events by Category</h3>
               <Activity className="w-5 h-5 text-purple-400" />
             </div>
             <div className="space-y-4">
-              {['Konser', 'Olahraga', 'Teater', 'Festival', 'Workshop'].map((category, idx) => {
+              {/* Perubahan di baris berikut: */}
+              {['Concert', 'Sports', 'Theater', 'Festival', 'Workshop'].map((category, idx) => {
                 const count = events.filter(e => e.category === category).length;
                 const percentage = stats.totalEvents > 0 ? (count / stats.totalEvents) * 100 : 0;
                 return (
@@ -167,11 +168,11 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
 
         {/* Recent Events Table */}
         <div className="p-6 bg-slate-800/50 border border-gray-700 rounded-xl">

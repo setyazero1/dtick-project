@@ -28,7 +28,6 @@ export default function RootLayout({
           <footer className="bg-slate-900/50 border-t border-purple-500/20 py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
               <p>© 2025 dTick. Built on Cardano blockchain.</p>
-              <p className="mt-2">Powered by Aiken Smart Contracts</p>
             </div>
           </footer>
         </div>
