@@ -97,12 +97,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <span className="text-white font-bold text-xl">dT</span>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                dTick
-              </span>
+              <img src="/dTick.png" alt="dTick Logo" className="h-20 w-25" />
             </Link>
 
             {/* Desktop Navigation */}
